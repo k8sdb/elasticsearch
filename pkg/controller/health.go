@@ -66,8 +66,8 @@ func (c *Controller) CheckElasticsearchHealthOnce() {
 	for idx := range dbList {
 		db := dbList[idx]
 
-		// If the DB object is deleted, no need to perform health check.
-		if db.DeletionTimestamp != nil {
+		// If the DB object is deleted or halted, no need to perform health check.
+		if db.DeletionTimestamp != nil || db.Spec.Halted {
 			continue
 		}
 
